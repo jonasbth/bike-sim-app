@@ -25,12 +25,15 @@ jobs:
             package-lock.json
             backend/package-lock.json
 
-    - name: Install dependencies
+    - name: Install dependencies in ./
       run: npm ci
-#      working-directory: ./backend
 
     - name: Run ESLint
       run: npm run lint
+
+    - name: Install dependencies in ./backend
+      run: npm ci
+      working-directory: ./backend
 
     - name: Create test database
       run: ./reset_test_db.bash
