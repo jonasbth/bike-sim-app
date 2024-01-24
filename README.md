@@ -1,13 +1,13 @@
 # Bike simulation app with backend API and database
-This repository holds parts of the apps for the bike rental group assignment of the Vteam course at BTH, Sweden.
+This repository holds parts of the apps for the bike rental group assignment of the [Vteam course](https://dbwebb.se/kurser/vteam-v1) at BTH, Sweden.
 
-The backend implements an API described in backend/public/index.html, which is reachable at localhost:1337 or localhost:1337/api/v1/ for the running app.
+The backend implements an API described in [public/index.html](backend/public/index.html), which is reachable at localhost:1337 or localhost:1337/api/v1/ for the running app.
 
-An SQLite3 database is used for storage, with the library better-sqlite3 used for accessing data. Both the backend and the bike-sim apps are Node.js applications.
+An [SQLite3](https://www.sqlite.org/index.html) database is used for storage, with the library [better-sqlite3](https://github.com/WiseLibs/better-sqlite3) used for accessing data. Both the backend and the bike-sim apps are [Node.js](https://nodejs.org/en) applications.
 
 Parts of the simulation are controlled by settings in bike-sim/config.js, such as number of users and bikes in the simulation. At startup, the database is cleared and filled with data described in bike-sim/src/db_data.js. Some of the data is randomized, such as bike positions, battery level, and user names and account balance.
 
-A few parameters controlling the simulation are currently hard-coded, e.g. the bike positions in each city are updated every third second, so that, with three cities, an update takes place once per second.
+A few parameters controlling the simulation are currently hard-coded, e.g. the bike positions in each city are updated every 2100 ms, so that, with three cities, an update takes place once per 700 ms.
 
 At startup, the number of bike rides is ramped up, with 10 % of the desired number of rides for each city update, so it takes some minute to reach the desired level.
 
