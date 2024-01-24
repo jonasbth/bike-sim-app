@@ -13,13 +13,13 @@ const cities = require('./src/db_data.js').cities;
 setupAll(numUsers, numBikesCity);
 
 function startUpdateTimer(cityId) {
-    setInterval(rides.updateCity, 3000, cityId);
+    setInterval(rides.updateCity, 2100, cityId);
     cityId++;
 
     if (cityId <= cities.length) {
-        setTimeout(startUpdateTimer, 1000, cityId);
+        setTimeout(startUpdateTimer, 700, cityId);
     }
 }
 
-setImmediate(startUpdateTimer, 1);
+startUpdateTimer(1);
 

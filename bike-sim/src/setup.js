@@ -154,7 +154,7 @@ exports.all = function(numUsers, numBikesCity) {
             }
 
             // Set battery level
-            const battery = Math.floor(30 + 71 * Math.random()); // 30 – 100
+            const battery = Math.floor(20 + 41 * Math.random()); // 20 – 60
 
             try {
                 // Add bike to park_zone

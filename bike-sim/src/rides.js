@@ -53,7 +53,7 @@ exports.updateCity = function(cityId) {
 
     const timeEnd = process.hrtime.bigint();
 
-    console.log(`Update city ${cityId} Time elapsed: ${(timeEnd - timeStart) / 1000000n} ms\n`);
+    console.log(`Update city ${cityId} Time elapsed: ${(timeEnd - timeStart) / 1000000n} ms`);
 };
 
 
@@ -75,7 +75,8 @@ async function start(cityId) {
 
     // Find an available bike
     const bike = db.prepare(`SELECT id, lat, lon, battery FROM bikes WHERE city_id = ?
-        AND status_id = 0 AND (id > ? OR id > -1)`).get(cityId, prevBikeId[cityId - 1]);
+        AND status_id = 0 AND battery > 0 AND (id > ? OR id > -1)`)
+        .get(cityId, prevBikeId[cityId - 1]);
 
     if (!bike) {
         console.log('rides.start(): No available bike for city_id', cityId);
@@ -84,7 +85,7 @@ async function start(cityId) {
 
     prevUserId = userId;
     prevBikeId[cityId - 1] = bike.id;
-    console.log(`* Start ride, user: ${userId}, bike: ${bike.id} *`);
+    console.log(`*** Start ride, user: ${userId}, bike: ${bike.id} ***`);
 
     // Create a Bike object and put in set
     bikesInRide[cityId - 1].add(new Bike(bike.id, cityId, bike.lat, bike.lon,
@@ -110,7 +111,7 @@ async function start(cityId) {
  * @param {Bike} bike The bike object.
  */
 async function finish(bike) {
-    console.log(`– Finish ride, user: ${bike.userId}, bike: ${bike.id} –`);
+    console.log(`––– Finish ride, user: ${bike.userId}, bike: ${bike.id} –––`);
 
     // Update database
     // const response =

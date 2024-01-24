@@ -21,7 +21,7 @@ module.exports = class Bike {
         this.lon = lon;
         this.battery = battery;
         this.userId = userId;
-        this.speed = Math.floor(5 + 21 * Math.random()); // 5 – 25 km/h
+        this.speed = Math.floor(10 + 21 * Math.random()); // 10 – 30 km/h
 
         const alpha = 2 * Math.PI * Math.random();        // 0 – 2𝛑 (driving direction)
         const xVel = this.speed * Math.cos(alpha) / 3.6;  // m/s
