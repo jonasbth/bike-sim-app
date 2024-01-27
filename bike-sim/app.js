@@ -4,13 +4,12 @@
  */
 "use strict";
 
-const numUsers = require("./config.js").numUsers;
-const numBikesCity = require("./config.js").numBikesCity;
+const numUsers = require("./data/config.js").numUsers;
+const numBikesCity = require("./data/config.js").numBikesCity;
 const setupAll = require("./src/setup.js").all;
 const rides = require("./src/rides.js");
-const cities = require('./src/db_data.js').cities;
-
-setupAll(numUsers, numBikesCity);
+//const cities = require('./src/db_data.js').cities;
+let cities;
 
 function startUpdateTimer(cityId) {
     setInterval(rides.updateCity, 2100, cityId);
@@ -21,5 +20,11 @@ function startUpdateTimer(cityId) {
     }
 }
 
-startUpdateTimer(1);
+(async function() {
+    // Import from ESM-module
+    cities = (await import("./data/db_data.mjs")).cities;
+
+    setupAll(numUsers, numBikesCity);
+    startUpdateTimer(1);
+})();
 

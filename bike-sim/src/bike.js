@@ -4,19 +4,19 @@
  */
 "use strict";
 
-const baseURL = require("../config.js").baseURL;
-const minDistanceUpdate = require("../config.js").minDistanceUpdate;
-const batteryDischarge = require("../config.js").batteryDischarge;
-const cities = require('./db_data.js').cities;
+const baseURL = require("../data/config.js").baseURL;
+const minDistanceUpdate = require("../data/config.js").minDistanceUpdate;
+const batteryDischarge = require("../data/config.js").batteryDischarge;
 
 module.exports = class Bike {
+    static cities = []; // Assign this static and call init() before instantiating
     static dxTodlon = [];
     static dyTodlat = [];
 
     constructor(id, cityId, lat, lon, battery, userId) {
         this.id = id;
         this.cityId = cityId;
-        this.city = cities[this.cityId - 1];
+        this.city = Bike.cities[this.cityId - 1];
         this.lat = lat;
         this.lon = lon;
         this.battery = battery;
@@ -33,13 +33,15 @@ module.exports = class Bike {
         this.updated = this.startTime;
     }
 
-    static {
+    static init() {
+        // Assign cities before calling this method
+
         /* Compute length in m of a degree longitude and latitude respectively
          * at city centers (length is a function of the latitude)
          *
          * ref: https://en.wikipedia.org/wiki/Geographic_coordinate_system
          */
-        for (const city of cities) {
+        for (const city of this.cities) {
             const phi = city.lat * Math.PI / 180;
 
             this.dxTodlon.push(111412.84 * Math.cos(phi) - 93.5 * Math.cos(3*phi) +

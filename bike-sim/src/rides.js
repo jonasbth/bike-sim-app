@@ -7,20 +7,27 @@
 const dbName = "bike-rentals";
 
 const db = require('better-sqlite3')(`../backend/db/${dbName}.sqlite`);
-const baseURL = require("../config.js").baseURL;
-const maxRidesCity = require("../config.js").maxRidesCity;
-const minRideDuration = require("../config.js").minRideDuration;
-const cities = require('./db_data.js').cities;
+const baseURL = require("../data/config.js").baseURL;
+const maxRidesCity = require("../data/config.js").maxRidesCity;
+const minRideDuration = require("../data/config.js").minRideDuration;
 const Bike = require("./bike.js");
 
 const bikesInRide = [];
 const prevBikeId = [];
 let prevUserId = -1;
 
-for (let i = 0; i < cities.length; i++) {
-    bikesInRide.push(new Set());
-    prevBikeId.push(-1);
-}
+(async function() {
+    // Import from ESM-module
+    const cities = (await import("../data/db_data.mjs")).cities;
+
+    Bike.cities = cities;
+    Bike.init();
+
+    for (let i = 0; i < cities.length; i++) {
+        bikesInRide.push(new Set());
+        prevBikeId.push(-1);
+    }
+})();
 
 /**
  * Update a city by starting and finishing rides, and moving bikes.

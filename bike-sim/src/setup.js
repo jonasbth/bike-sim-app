@@ -7,12 +7,18 @@
 const dbName = "bike-rentals";
 
 const db = require('better-sqlite3')(`../backend/db/${dbName}.sqlite`);
-const cities = require('./db_data.js').cities;
-const stations = require('./db_data.js').stations;
-const parkZones = require('./db_data.js').parkZones;
-const pricing = require('./db_data.js').pricing;
 const randomName = require('./utils.js').randomName;
 const randomAccount = require('./utils.js').randomAccount;
+
+let cities;
+let stations;
+let parkZones;
+let pricing;
+
+(async function() {
+    // Import from ESM-module (using destructuring assignment)
+    ({ cities, stations, parkZones, pricing } = await import("../data/db_data.mjs"));
+})();
 
 /**
  * Reset database and fill up with generated content.
