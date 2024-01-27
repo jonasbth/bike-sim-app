@@ -5,7 +5,8 @@ The backend implements an API described in [public/index.html](backend/public/in
 
 An [SQLite3](https://www.sqlite.org/index.html) database is used for storage, with the library [better-sqlite3](https://github.com/WiseLibs/better-sqlite3) used for accessing data. Both the backend and the bike-sim apps are [Node.js](https://nodejs.org/en) applications.
 
-Parts of the simulation are controlled by settings in bike-sim/config.js, such as number of users and bikes in the simulation. At startup, the database is cleared and filled with data described in bike-sim/src/db_data.js. Some of the data is randomized, such as bike positions, battery level, and user names and account balance.
+## The simulation engine
+The simulation app resides in [bike-sim/](bike-sim/). At startup, the database is cleared and filled with data described in [data/db_data.mjs](bike-sim/data/db_data.mjs). Some of the data is randomized, such as bike positions, battery level, and user names and account balance. Parts of the simulation are controlled by settings in [data/config.js](bike-sim/data/config.js), such as number of users and bikes in the simulation.
 
 A few parameters controlling the simulation are currently hard-coded, e.g. the bike positions in each city are updated every 2100 ms, so that, with three cities, an update takes place once per 700 ms.
 
@@ -19,10 +20,24 @@ At ride finish, the cost of the ride is computed, and the user's balance is with
 
 The execution time of a city update is measured and output to the console. For some hundred bikes in motion, the executions time is of the order of tens of milliseconds, so there seems to be room for even more bikes in the simulation.
 
+## Visualization of the simulation
+A visualization of the simulation was made using the mapping library [Leaflet](https://leafletjs.com/). For the running application it is available at localhost:1337/map.html. The JavaScript source file is [src/map.mjs](backend/public/src/map.mjs).
+
+Bikes in a ride are shown as blue dots, and available bikes in green. For bikes low in battery (typically below 15 %), running bikes are violet and available bikes orange. When the battery is completely discharged, the bike is shown in red and
+stops, if it was in a ride with a user.
+
+The path traveled by an individual bike is shown as a gray dashed line. The city border is indicated by a rectangle, as well as the parking zones. Charging stations are indicated by symbols. Note that the bikes are confined within the city border.
+
+If the simulation is left running, all bikes will eventually stop as they are discharged. Below is a picture of a sample simulation, which has been running for a few minutes.
+
+![Bike simulation in Karlskrona](simulation.png)
+
 ## Starting the Docker containers holding the apps
 The database is not stored in the repository, so to create the database and start the containers, one can run the shell script `./start_sim.bash`. For subsequent runs, once the database is in place, one could instead run just `docker compose up`.
 
-Note that the backend/db/ directory is mounted in the Docker containers, so that database changes are preserved between container restarts. However, in the simulation, the database is reset at startup.
+The backend/db/ directory is mounted in the Docker containers, so that database changes are preserved between container restarts. However, in the simulation, the database is reset at startup.
+
+The /bike-sim/data/ directory is also mounted, which contains simulation parameters in [config.js](bike-sim/data/config.js) and database content in [db_data.mjs](bike-sim/data/db_data.mjs).
 
 ## Stopping the containers
 In a new terminal window, run `docker compose down`.
