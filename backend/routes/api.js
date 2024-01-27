@@ -21,7 +21,7 @@ function logToConsole(req, res, next) {
 /**
  * Get all cities.
  */
-router.get('/cities', (req, res) => {
+router.get('/cities', logToConsole, (req, res) => {
     const result = db.getAllCities();
 
     return res.status(200).json(result);
@@ -661,7 +661,8 @@ router.get('/rides/:id', (req, res) => {
 /**
  * Start a new ride.
  */
-router.post('/rides', logToConsole, urlencodedParser, (req, res) => {
+//router.post('/rides', logToConsole, urlencodedParser, (req, res) => {
+router.post('/rides', urlencodedParser, (req, res) => {
     const result = db.startRide(req.body);
 
     if (result.changes === 0) {
@@ -683,7 +684,7 @@ router.post('/rides', logToConsole, urlencodedParser, (req, res) => {
  * Finish a ride.
  * Calculate price and withdraw user's balance.
  */
-router.put('/rides', logToConsole, urlencodedParser, (req, res) => {
+router.put('/rides', urlencodedParser, (req, res) => {
     const result = db.finishRide(req.body);
 
     if (result.changes === 0) {
