@@ -23,12 +23,14 @@ The execution time of a city update is measured and output to the console. For s
 ## Visualization of the simulation
 A visualization of the simulation was made using the mapping library [Leaflet](https://leafletjs.com/). For the running application it is available at localhost:1337/map.html. The JavaScript source file is [src/map.mjs](backend/public/src/map.mjs).
 
-Bikes in a ride are shown as blue dots, and available bikes in green. For bikes low in battery (typically below 15 %), running bikes are violet and available bikes orange. When the battery is completely discharged, the bike is shown in red and
+Bikes in a ride are shown as blue dots, and available bikes in green. For bikes low in battery (typically below 15 %), running bikes are violet and available bikes are yellowish. When the battery is completely discharged, the bike is shown in red and
 stops, if it was in a ride with a user.
 
-The path traveled by an individual bike is shown as a gray dashed line. The city border is indicated by a rectangle, as well as the parking zones. Charging stations are indicated by symbols. Note that the bikes are confined within the city border.
+The city border is indicated by a dashed rectangle, as well as the parking zones, which also have a darker appearance. Charging stations are indicated by battery symbols.
 
-If the simulation is left running, all bikes will eventually stop as they are discharged. Below is a picture of a sample simulation, which has been running for a few minutes.
+The path traveled by an individual bike is shown as a gray dashed line. Where the paths make a sharp turn, a ride was finished and a new one started. Note that the bikes are confined within the city border.
+
+If the simulation is left running, all bikes will eventually stop, as they are discharged. Below is a picture of a simulation, which has been running for a few minutes. The city is Karlskrona, Sweden.
 
 ![Bike simulation in Karlskrona](simulation.png)
 
