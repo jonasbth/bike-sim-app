@@ -1,5 +1,3 @@
-<style>img{margin-top:30px;}</style>
-
 ![Scooter](../backend/public/img/scooter128.png)
 
 ## The backend API
