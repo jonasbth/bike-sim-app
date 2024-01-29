@@ -1,3 +1,3 @@
 ## Moving bike calculation
 
-![Bike calculation](bike-move.drawio.png)
+![Bike calculation](bike-move.png)
